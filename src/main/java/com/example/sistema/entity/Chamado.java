@@ -8,7 +8,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "chamado")
 public class Chamado {
@@ -25,15 +24,11 @@ public class Chamado {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusChamado status;
+    private PrioridadeChamado prioridade;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PrioridadeChamado prioridade;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    private StatusChamado status;
 
     @ManyToOne
     @JoinColumn(name = "departamento_id", nullable = false)
@@ -47,8 +42,6 @@ public class Chamado {
 
     private LocalDateTime atualizadoEm = LocalDateTime.now();
 
-
-
     @PreUpdate
     public void preUpdate() {
         this.atualizadoEm = LocalDateTime.now();
@@ -60,10 +53,42 @@ public class Chamado {
         CONCLUIDO
     }
 
+    public StatusChamado getStatus() {
+        return status;
+    }
+
     public enum PrioridadeChamado  {
-        baixa,
-        media,
-        alta
+        BAIXA,
+        MEDIA,
+        ALTA
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public List<RespostaChamado> getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(List<RespostaChamado> resposta) {
+        this.resposta = resposta;
+    }
+
+    public PrioridadeChamado getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(PrioridadeChamado prioridade) {
+        this.prioridade = prioridade;
+    }
+
+    public void setStatus(StatusChamado status) {
+        this.status = status;
     }
 
     public Long getId() {
@@ -88,46 +113,6 @@ public class Chamado {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public StatusChamado getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusChamado status) {
-        this.status = status;
-    }
-
-    public PrioridadeChamado getPrioridade() {
-        return prioridade;
-    }
-
-    public void setPrioridade(PrioridadeChamado prioridade) {
-        this.prioridade = prioridade;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public List<RespostaChamado> getResposta() {
-        return resposta;
-    }
-
-    public void setResposta(List<RespostaChamado> resposta) {
-        this.resposta = resposta;
     }
 
     public LocalDateTime getCriadoEm() {

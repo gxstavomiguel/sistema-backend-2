@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/departamento")
@@ -19,6 +20,19 @@ public class DepartamentoController {
 
     public DepartamentoController(DepartamentoService departamentoService){
         this.departamentoService = departamentoService;
+    }
+
+    @GetMapping("/listaDepartamento")
+    public List<Map<String, Object>> listarDepartamentos(){
+        List<Departamento> departamentos = departamentoService.findAll();
+        return departamentos.stream()
+                .map(departamento -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id", departamento.getId());
+                    map.put("nome", departamento.getNome());
+                    return map;
+                })
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/save")

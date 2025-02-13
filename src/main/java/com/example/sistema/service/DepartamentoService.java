@@ -42,4 +42,5 @@ public class DepartamentoService {
         departamentoRepository.deleteById(id);
         return "Departamento deletado com sucesso";
     }
+
 }

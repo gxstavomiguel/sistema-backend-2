@@ -2,6 +2,7 @@ package com.example.sistema.service;
 
 import com.example.sistema.entity.Chamado;
 import com.example.sistema.repository.ChamadoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 @Service
 public class ChamadoService {
 
+    @Autowired
     ChamadoRepository chamadoRepository;
 
     public String save(Chamado chamado) {

@@ -1,11 +1,16 @@
 package com.example.sistema.controller;
 
+import com.example.sistema.entity.Departamento;
 import com.example.sistema.entity.Usuario;
 import com.example.sistema.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -13,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("api/usuario/")
 public class UsuarioController {
 
+    @Autowired
     UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService) {
@@ -20,12 +26,25 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody Usuario usuario){
+    public ResponseEntity<Map<String, String>> save(@RequestBody Usuario usuario){
         try {
+
+//                Departamento departamento = departamentoRepository.findById(usuario.getDepartamentoId())
+//                        .orElseThrow(() -> new RuntimeException("Departamento não encontrado"));
+//                usuario.setDepartamento(departamento);
+//                usuarioRepository.save(usuario);
+//            }
+
+
+
             String msg = usuarioService.save(usuario);
-            return new ResponseEntity<>(msg, HttpStatus.OK);
+            Map<String, String> response = new HashMap<>();
+            response.put("retorno", msg);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            Map<String, String> response = new HashMap<>();
+            response.put("retorno", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.sistema.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,6 @@ public class Usuario {
     @Column(nullable = false)
     private String telefone;
 
-    @Column(nullable = false, unique = true)
-    private String cpf;
-
     @Column(nullable = false)
     private String cargo;
 
@@ -40,6 +38,7 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name="departamento_id", nullable = false)
+    @JsonBackReference
     private Departamento departamento;
 
     @Column(updatable = false)
@@ -94,14 +93,6 @@ public class Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getCargo() {

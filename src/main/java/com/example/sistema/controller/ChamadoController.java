@@ -2,16 +2,21 @@ package com.example.sistema.controller;
 
 import com.example.sistema.entity.Chamado;
 import com.example.sistema.service.ChamadoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("api/chamado/")
 public class ChamadoController {
 
+    @Autowired
     ChamadoService chamadoService;
 
     public ChamadoController(ChamadoService chamadoService) {
@@ -19,12 +24,16 @@ public class ChamadoController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> save(Chamado chamado) {
+    public ResponseEntity<Map<String, String>> save(@RequestBody Chamado chamado) {
         try {
             String msg = chamadoService.save(chamado);
-            return new ResponseEntity<>(msg, HttpStatus.OK);
+            Map<String, String> response = new HashMap<>();
+            response.put("retorno", msg);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            Map<String, String> response = new HashMap<>();
+            response.put("retorno", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 

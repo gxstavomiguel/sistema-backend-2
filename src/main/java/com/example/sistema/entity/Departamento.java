@@ -1,5 +1,6 @@
 package com.example.sistema.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,8 @@ public class Departamento {
     private String descricao;
 
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Usuario> usuarios;
-
-    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Chamado> chamados;
 
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
@@ -63,14 +62,6 @@ public class Departamento {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
-    }
-
-    public List<Chamado> getChamados() {
-        return chamados;
-    }
-
-    public void setChamados(List<Chamado> chamados) {
-        this.chamados = chamados;
     }
 
     public LocalDateTime getCriadoEm() {
