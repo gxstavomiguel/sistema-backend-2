@@ -8,10 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -49,10 +47,20 @@ public class UsuarioController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<Usuario>> findAll(){
+    public ResponseEntity<Object> findAll(){
         try {
             List<Usuario> lista = usuarioService.findAll();
-            return new ResponseEntity<>(lista, HttpStatus.OK);
+            return  ResponseEntity.ok(Collections.singletonMap("usuarios", lista));
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/findByEmail")
+    public ResponseEntity<Object> findByEmail(@RequestBody String email){
+        try {
+            Object retornoEmail = usuarioService.findByEmail(email);
+            return  ResponseEntity.ok(Collections.singletonMap("Email do usuário", retornoEmail));
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -67,6 +75,16 @@ public class UsuarioController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+//    @GetMapping("/findByEmail")
+//    public ResponseEntity<Optional<Usuario>> findByEmail(@RequestParam String email){
+//        try {
+//            Optional<Usuario> retorno = usuarioService.findByEmail(email);
+//            return new ResponseEntity<>(retorno, HttpStatus.OK);
+//        } catch (Exception e){
+//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@RequestBody Usuario usuario, @PathVariable Long id){
