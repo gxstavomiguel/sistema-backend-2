@@ -76,16 +76,6 @@ public class UsuarioController {
         }
     }
 
-//    @GetMapping("/findByEmail")
-//    public ResponseEntity<Optional<Usuario>> findByEmail(@RequestParam String email){
-//        try {
-//            Optional<Usuario> retorno = usuarioService.findByEmail(email);
-//            return new ResponseEntity<>(retorno, HttpStatus.OK);
-//        } catch (Exception e){
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        }
-//    }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@RequestBody Usuario usuario, @PathVariable Long id){
         try {

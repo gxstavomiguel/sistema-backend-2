@@ -1,16 +1,14 @@
 package com.example.sistema.controller;
 
 import com.example.sistema.entity.Chamado;
+import com.example.sistema.entity.Usuario;
 import com.example.sistema.service.ChamadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/chamado/")
@@ -37,11 +35,21 @@ public class ChamadoController {
         }
     }
 
+//    @GetMapping("/findAll")
+//    public ResponseEntity<List<Chamado>> findAll(){
+//        try {
+//            List<Chamado> lista = chamadoService.findAll();
+//            return new ResponseEntity<>(lista, HttpStatus.OK);
+//        } catch (Exception e){
+//            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
     @GetMapping("/findAll")
-    public ResponseEntity<List<Chamado>> findAll(){
+    public ResponseEntity<Object> findAll(){
         try {
             List<Chamado> lista = chamadoService.findAll();
-            return new ResponseEntity<>(lista, HttpStatus.OK);
+            return  ResponseEntity.ok(Collections.singletonMap("chamados", lista));
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
