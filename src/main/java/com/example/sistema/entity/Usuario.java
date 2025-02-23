@@ -1,6 +1,7 @@
 package com.example.sistema.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -36,10 +37,11 @@ public class Usuario {
     @Column(nullable = false)
     private TipoUsuario tipo;
 
-    @ManyToOne
-    @JoinColumn(name="departamento_id", nullable = false)
-    @JsonBackReference
-    private Departamento departamento;
+//    @ManyToOne
+//    @JoinColumn(name="departamento_id", nullable = false)
+////    @JsonBackReference
+//    @JsonManagedReference
+//    private Departamento departamento;
 
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
@@ -111,13 +113,13 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
+//    public Departamento getDepartamento() {
+//        return departamento;
+//    }
+//
+//    public void setDepartamento(Departamento departamento) {
+//        this.departamento = departamento;
+//    }
 
     public LocalDateTime getCriadoEm() {
         return criadoEm;

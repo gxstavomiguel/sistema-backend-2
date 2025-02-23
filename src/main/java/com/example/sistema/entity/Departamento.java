@@ -23,9 +23,21 @@ public class Departamento {
     @Column(nullable = false)
     private String descricao;
 
+//    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+//    private List<Usuario> usuarios;
+
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Usuario> usuarios;
+    private List<Chamado> chamados;
+
+    public List<Chamado> getChamados() {
+        return chamados;
+    }
+
+    public void setChamados(List<Chamado> chamados) {
+        this.chamados = chamados;
+    }
 
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
@@ -56,13 +68,13 @@ public class Departamento {
         this.descricao = descricao;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
+//    public List<Usuario> getUsuarios() {
+//        return usuarios;
+//    }
+//
+//    public void setUsuarios(List<Usuario> usuarios) {
+//        this.usuarios = usuarios;
+//    }
 
     public LocalDateTime getCriadoEm() {
         return criadoEm;
