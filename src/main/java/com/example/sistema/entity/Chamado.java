@@ -51,8 +51,6 @@ public class Chamado {
    @JsonBackReference
     private Departamento departamento;
 
-    @OneToMany(mappedBy = "chamado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RespostaChamado> resposta;
 
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
@@ -86,14 +84,6 @@ public class Chamado {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
-    }
-
-    public List<RespostaChamado> getResposta() {
-        return resposta;
-    }
-
-    public void setResposta(List<RespostaChamado> resposta) {
-        this.resposta = resposta;
     }
 
     public PrioridadeChamado getPrioridade() {

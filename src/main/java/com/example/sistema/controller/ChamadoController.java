@@ -78,6 +78,11 @@ public class ChamadoController {
         }
     }
 
+    @GetMapping("/qtdchamadosbydepartamento")
+    public ResponseEntity<Map<String, Integer>> countChamadosPorDepartamento() {
+        Map<String, Integer> chamadosPorDepartamento = chamadoService.countChamadosPorDepartamento();
+        return new ResponseEntity<>(chamadosPorDepartamento, HttpStatus.OK);
+    }
 
 
 
