@@ -35,7 +35,6 @@ public class DepartamentoControllerTest {
 
     @Test
     void testSaveDepartamento() throws Exception {
-        // Criando um departamento para enviar no request
         Departamento departamento = new Departamento();
         departamento.setNome("TI");
         departamento.setDescricao("Departamento de Tecnologia");

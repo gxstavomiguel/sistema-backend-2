@@ -43,16 +43,6 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/findByEmail")
-    public ResponseEntity<Object> findByEmail(@RequestBody String email){
-        try {
-            Object retornoEmail = usuarioService.findByEmail(email);
-            return  ResponseEntity.ok(Collections.singletonMap("Email do usuário", retornoEmail));
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @GetMapping("/findById/{id}")
     public ResponseEntity<Optional<Usuario>> findById(@PathVariable Long id){
         try {

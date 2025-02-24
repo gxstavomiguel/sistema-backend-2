@@ -33,10 +33,6 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-    public Optional findByEmail(String email){
-        return usuarioRepository.findByEmail(email);
-    }
-
     public String delete(Long id) {
         usuarioRepository.deleteById(id);
         return "Usuario deletado com sucesso";
