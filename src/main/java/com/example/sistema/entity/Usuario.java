@@ -14,7 +14,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 public class Usuario implements UserDetails {
 
@@ -35,9 +34,6 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true)
     private String telefone;
 
-    @Column(nullable = false)
-    private String cargo;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoUsuario tipo;
@@ -48,16 +44,25 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private UsuarioRole role;
 
-    public Usuario(String login, String password, UsuarioRole role){
-        this.login = login;
-        this.password = password;
-        this.role = role;
-    }
-
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
 
     private LocalDateTime atualizadoEm = LocalDateTime.now();
+
+    public Usuario(String login, String encryptedPassword, UsuarioRole role, String nome, String email, String telefone) {
+        this.login = login;
+        this.password = encryptedPassword; // O password deve ser a senha criptografada
+        this.role = role;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+//        if (role == UsuarioRole.ADMIN) {
+//            this.tipo = TipoUsuario.ADMIN;
+//        } else {
+//            this.tipo = TipoUsuario.NORMAL; // Valor padrão
+//        };
+        this.tipo = TipoUsuario.ADMIN;
+    }
 
     @PreUpdate
     public void preUpdate() {
@@ -78,6 +83,14 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() {
         return login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
@@ -138,14 +151,6 @@ public class Usuario implements UserDetails {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
 
     public TipoUsuario getTipo() {
