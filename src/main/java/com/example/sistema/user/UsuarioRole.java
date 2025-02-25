@@ -1,16 +1,50 @@
 package com.example.sistema.user;
 
-public enum UsuarioRole {
-    ADMIN("admin"),
-    USER("user");
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-    private String role;
+import jakarta.persistence.*;
 
-    UsuarioRole(String role){
-        this.role = role;
+@Entity
+public class UsuarioRole {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
+    private Long roleId;
+    private String name;
+
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public String getRole(){
-       return role;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public enum Values {
+
+        ADMIN(1L),
+        BASIC(2L);
+
+        long roleId;
+
+        Values(long roleId) {
+            this.roleId = roleId;
+        }
+
+        public long getRoleId() {
+            return roleId;
+        }
     }
 }

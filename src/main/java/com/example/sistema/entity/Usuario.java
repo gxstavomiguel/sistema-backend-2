@@ -1,5 +1,6 @@
 package com.example.sistema.entity;
 
+import com.example.sistema.user.AuthenticationDTO;
 import com.example.sistema.user.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,13 +8,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Entity
 public class Usuario implements UserDetails {
 
@@ -41,26 +43,33 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true)
     private String login;
 
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
     private UsuarioRole role;
+
+    public UsuarioRole getRole() {
+        return role;
+    }
+
+    public void setRole(UsuarioRole role) {
+        this.role = role;
+    }
 
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
 
     private LocalDateTime atualizadoEm = LocalDateTime.now();
 
+    public Usuario() {
+    }
+
     public Usuario(String login, String encryptedPassword, UsuarioRole role, String nome, String email, String telefone) {
         this.login = login;
-        this.password = encryptedPassword; // O password deve ser a senha criptografada
+        this.password = encryptedPassword;
         this.role = role;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
-//        if (role == UsuarioRole.ADMIN) {
-//            this.tipo = TipoUsuario.ADMIN;
-//        } else {
-//            this.tipo = TipoUsuario.NORMAL; // Valor padrão
-//        };
         this.tipo = TipoUsuario.ADMIN;
     }
 
@@ -69,10 +78,15 @@ public class Usuario implements UserDetails {
         this.atualizadoEm = LocalDateTime.now();
     }
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        if(this.role == ) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+//        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+//    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UsuarioRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of();
     }
 
     @Override
@@ -175,5 +189,9 @@ public class Usuario implements UserDetails {
 
     public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
+    }
+
+    public boolean isLoginCorrect(AuthenticationDTO authenticationDTO, PasswordEncoder encoder) {
+        return encoder.matches(authenticationDTO.password(), this.password);
     }
 }

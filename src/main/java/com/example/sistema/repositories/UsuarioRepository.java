@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query
-    UserDetails findByLogin(String login);
+//    UserDetails findByLogin(String login);
+    Optional<Usuario> findByLogin(String login);
 }
