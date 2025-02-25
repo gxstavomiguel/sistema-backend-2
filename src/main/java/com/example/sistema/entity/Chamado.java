@@ -1,14 +1,11 @@
 package com.example.sistema.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,7 +45,7 @@ public class Chamado {
 
     @ManyToOne
     @JoinColumn(name = "departamento_id", nullable = false)
-   @JsonBackReference
+    @JsonBackReference
     private Departamento departamento;
 
 
@@ -62,7 +59,7 @@ public class Chamado {
         this.atualizadoEm = LocalDateTime.now();
     }
 
-    public enum StatusChamado  {
+    public enum StatusChamado {
         ABERTO,
         EM_ANDAMENTO,
         CONCLUIDO
@@ -72,7 +69,7 @@ public class Chamado {
         return status;
     }
 
-    public enum PrioridadeChamado  {
+    public enum PrioridadeChamado {
         BAIXA,
         MEDIA,
         ALTA

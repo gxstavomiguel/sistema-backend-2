@@ -1,9 +1,10 @@
 package com.example.sistema.service;
 
 import com.example.sistema.entity.Departamento;
-import com.example.sistema.repository.DepartamentoRepository;
+import com.example.sistema.repositories.DepartamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 

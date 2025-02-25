@@ -3,14 +3,11 @@ package com.example.sistema.controller;
 import com.example.sistema.entity.Usuario;
 import com.example.sistema.service.UsuarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -19,7 +16,6 @@ import java.util.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UsuarioControllerTest {
@@ -33,7 +29,7 @@ class UsuarioControllerTest {
     private UsuarioService usuarioService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(usuarioController).build();
     }
@@ -56,8 +52,8 @@ class UsuarioControllerTest {
         String jsonRequest = objectMapper.writeValueAsString(usuario);
 
         mockMvc.perform(post("/api/usuario/save")
-                .contentType("application/json")
-                .content("{ \"nome\": \"Gustavo\", \"email\": \"gustavo@miguel.com\", \"senha\": \"123456\", \"telefone\": \"123456789\", \"cargo\": \"Funcionário\", \"tipo\": \"ADMIN\" }"))
+                        .contentType("application/json")
+                        .content("{ \"nome\": \"Gustavo\", \"email\": \"gustavo@miguel.com\", \"senha\": \"123456\", \"telefone\": \"123456789\", \"cargo\": \"Funcionário\", \"tipo\": \"ADMIN\" }"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.retorno").value("Usuário salvo com sucesso"));
     }

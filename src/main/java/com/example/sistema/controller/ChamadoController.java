@@ -1,9 +1,6 @@
 package com.example.sistema.controller;
 
 import com.example.sistema.entity.Chamado;
-import com.example.sistema.entity.Departamento;
-import com.example.sistema.entity.Usuario;
-import com.example.sistema.repository.DepartamentoRepository;
 import com.example.sistema.service.ChamadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,42 +35,42 @@ public class ChamadoController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<Object> findAll(){
+    public ResponseEntity<Object> findAll() {
         try {
             List<Chamado> lista = chamadoService.findAll();
-            return  ResponseEntity.ok(Collections.singletonMap("chamados", lista));
-        } catch (Exception e){
+            return ResponseEntity.ok(Collections.singletonMap("chamados", lista));
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/findById")
-    public ResponseEntity<Optional<Chamado>> findById(@PathVariable Long id){
+    public ResponseEntity<Optional<Chamado>> findById(@PathVariable Long id) {
         try {
             Optional<Chamado> chamadoPorId = chamadoService.findById(id);
             return new ResponseEntity<>(chamadoPorId, HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/update/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, Chamado chamado){
+    public ResponseEntity<String> update(@PathVariable Long id, Chamado chamado) {
         try {
             String msg = chamadoService.update(chamado, id);
             return new ResponseEntity<>(msg, HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         try {
             chamadoService.delete(id);
             String msg = "Chamado deletado com sucesso!";
             return new ResponseEntity<>(msg, HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -83,17 +80,5 @@ public class ChamadoController {
         Map<String, Integer> chamadosPorDepartamento = chamadoService.countChamadosPorDepartamento();
         return new ResponseEntity<>(chamadosPorDepartamento, HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

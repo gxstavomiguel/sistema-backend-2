@@ -1,17 +1,22 @@
 package com.example.sistema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.example.sistema.user.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +30,9 @@ public class Usuario {
     private String email;
 
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String telefone;
 
     @Column(nullable = false)
@@ -37,11 +42,17 @@ public class Usuario {
     @Column(nullable = false)
     private TipoUsuario tipo;
 
-//    @ManyToOne
-//    @JoinColumn(name="departamento_id", nullable = false)
-////    @JsonBackReference
-//    @JsonManagedReference
-//    private Departamento departamento;
+    @Column(nullable = false, unique = true)
+    private String login;
+
+    @Column(nullable = false)
+    private UsuarioRole role;
+
+    public Usuario(String login, String password, UsuarioRole role){
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
@@ -49,12 +60,48 @@ public class Usuario {
     private LocalDateTime atualizadoEm = LocalDateTime.now();
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         this.atualizadoEm = LocalDateTime.now();
     }
 
-    public enum TipoUsuario  {
-        ADMIN, FUNCIONARIO
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UsuarioRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public enum TipoUsuario {
+        ADMIN, NORMAL
     }
 
     public Long getId() {
@@ -81,12 +128,8 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getTelefone() {
@@ -112,14 +155,6 @@ public class Usuario {
     public void setTipo(TipoUsuario tipo) {
         this.tipo = tipo;
     }
-
-//    public Departamento getDepartamento() {
-//        return departamento;
-//    }
-//
-//    public void setDepartamento(Departamento departamento) {
-//        this.departamento = departamento;
-//    }
 
     public LocalDateTime getCriadoEm() {
         return criadoEm;

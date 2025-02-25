@@ -23,10 +23,6 @@ public class Departamento {
     @Column(nullable = false)
     private String descricao;
 
-//    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference
-//    private List<Usuario> usuarios;
-
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Chamado> chamados;
@@ -42,9 +38,8 @@ public class Departamento {
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
 
-    // Getters e Setters
 
-    public  Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -67,14 +62,6 @@ public class Departamento {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-//    public List<Usuario> getUsuarios() {
-//        return usuarios;
-//    }
-//
-//    public void setUsuarios(List<Usuario> usuarios) {
-//        this.usuarios = usuarios;
-//    }
 
     public LocalDateTime getCriadoEm() {
         return criadoEm;

@@ -1,9 +1,14 @@
-package com.example.sistema.repository;
+package com.example.sistema.repositories;
 
 import com.example.sistema.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
+    @Query
+    UserDetails findByLogin(String login);
 }

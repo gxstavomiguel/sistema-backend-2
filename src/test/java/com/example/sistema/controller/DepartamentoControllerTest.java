@@ -39,16 +39,13 @@ public class DepartamentoControllerTest {
         departamento.setNome("TI");
         departamento.setDescricao("Departamento de Tecnologia");
 
-        // Simulando a resposta do service
         when(departamentoService.save(any(Departamento.class)))
                 .thenReturn("Departamento salvo com sucesso!");
 
-        // Configurando o ObjectMapper para lidar com LocalDateTime
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
         String jsonRequest = objectMapper.writeValueAsString(departamento);
 
-        // Executando a requisição POST e verificando o retorno
         mockMvc.perform(post("/api/departamento/save")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
