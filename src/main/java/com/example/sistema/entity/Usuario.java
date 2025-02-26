@@ -1,7 +1,5 @@
 package com.example.sistema.entity;
 
-import com.example.sistema.user.AuthenticationDTO;
-import com.example.sistema.user.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Usuario implements UserDetails {
 
@@ -43,35 +41,10 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true)
     private String login;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private UsuarioRole role;
-
-    public UsuarioRole getRole() {
-        return role;
-    }
-
-    public void setRole(UsuarioRole role) {
-        this.role = role;
-    }
-
     @Column(updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
 
     private LocalDateTime atualizadoEm = LocalDateTime.now();
-
-    public Usuario() {
-    }
-
-    public Usuario(String login, String encryptedPassword, UsuarioRole role, String nome, String email, String telefone) {
-        this.login = login;
-        this.password = encryptedPassword;
-        this.role = role;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.tipo = TipoUsuario.ADMIN;
-    }
 
     @PreUpdate
     public void preUpdate() {
@@ -191,7 +164,4 @@ public class Usuario implements UserDetails {
         this.atualizadoEm = atualizadoEm;
     }
 
-    public boolean isLoginCorrect(AuthenticationDTO authenticationDTO, PasswordEncoder encoder) {
-        return encoder.matches(authenticationDTO.password(), this.password);
-    }
 }
