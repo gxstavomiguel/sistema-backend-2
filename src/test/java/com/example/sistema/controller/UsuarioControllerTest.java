@@ -39,10 +39,9 @@ class UsuarioControllerTest {
         Usuario usuario = new Usuario();
         usuario.setNome("Gustavo");
         usuario.setEmail("gustavo@miguel.com");
-        usuario.setSenha("123456");
+        usuario.setPassword("123456");
         usuario.setTelefone("123456789");
         usuario.setTipo(Usuario.TipoUsuario.ADMIN);
-        usuario.setCargo("Funcionário");
 
         when(usuarioService.save(any(Usuario.class)))
                 .thenReturn("Usuário salvo com sucesso");
@@ -64,9 +63,8 @@ class UsuarioControllerTest {
         usuario.setId(1L);
         usuario.setNome("Gustavo");
         usuario.setEmail("gustavo@miguel.com");
-        usuario.setSenha("123456");
+        usuario.setPassword("123456");
         usuario.setTelefone("123456789");
-        usuario.setCargo("Funcionario");
         usuario.setTipo(Usuario.TipoUsuario.ADMIN);
 
         when(usuarioService.findAll()).thenReturn(Collections.singletonList(usuario));
@@ -83,9 +81,8 @@ class UsuarioControllerTest {
         usuario.setId(1L);
         usuario.setNome("Gustavo");
         usuario.setEmail("gustavo@miguel.com");
-        usuario.setSenha("123456");
+        usuario.setPassword("123456");
         usuario.setTelefone("123456789");
-        usuario.setCargo("Funcionario");
         usuario.setTipo(Usuario.TipoUsuario.ADMIN);
 
         when(usuarioService.findById(anyLong())).thenReturn(Optional.of(usuario));
@@ -101,9 +98,8 @@ class UsuarioControllerTest {
         Usuario usuario = new Usuario();
         usuario.setNome("Gustavo Miguel da Silva");
         usuario.setEmail("gustavo@miguelsilva.com");
-        usuario.setSenha("novasenha1234");
+        usuario.setPassword("novasenha1234");
         usuario.setTelefone("987654321");
-        usuario.setCargo("Gerente");
         usuario.setTipo(Usuario.TipoUsuario.ADMIN);
 
         when(usuarioService.update(any(Usuario.class), anyLong())).thenReturn("Usuário atualizado com sucesso");

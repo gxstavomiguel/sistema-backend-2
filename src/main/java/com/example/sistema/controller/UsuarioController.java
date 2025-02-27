@@ -20,20 +20,19 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-//    @PostMapping("/save")
-//    @PostMapping("/auth/register")
-//    public ResponseEntity<Map<String, String>> save(@RequestBody Usuario usuario) {
-//        try {
-//            String msg = usuarioService.save(usuario);
-//            Map<String, String> response = new HashMap<>();
-//            response.put("retorno", msg);
-//            return new ResponseEntity<>(response, HttpStatus.OK);
-//        } catch (Exception e) {
-//            Map<String, String> response = new HashMap<>();
-//            response.put("retorno", e.getMessage());
-//            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @PostMapping("/save")
+    public ResponseEntity<Map<String, String>> save(@RequestBody Usuario usuario) {
+        try {
+            String msg = usuarioService.save(usuario);
+            Map<String, String> response = new HashMap<>();
+            response.put("retorno", msg);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("retorno", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/findAll")
     public ResponseEntity<Object> findAll() {
