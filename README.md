@@ -3,6 +3,10 @@
 **Descrição:**  
 Este projeto consiste em um sistema de gerenciamento de chamados e usuários, separado em dois repositórios diferentes: um para o Backend, utilizando Java Spring Boot, e outro para o Frontend, utilizando AngularJS e Javascript.
 
+(./src/main/resource/img/1.png)
+
+
+
 ---
 
 ## ✨ Funcionalidades
